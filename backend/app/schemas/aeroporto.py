@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 class AeroportoResponse(BaseModel):
     id: int
     external_id: int

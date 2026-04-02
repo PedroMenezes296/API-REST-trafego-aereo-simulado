@@ -1,6 +1,11 @@
 from sqlalchemy import Column, Integer, String, Float
 from app.database.base import Base
 
+from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy.orm import relationship
+
+from app.database.base import Base
+
 
 class Aeroporto(Base):
     __tablename__ = "aeroportos"
@@ -18,3 +23,7 @@ class Aeroporto(Base):
     municipio = Column(String, nullable=True)
     codigo_gps = Column(String, nullable=True)
     codigo_iata = Column(String, nullable=True)
+
+    voos = relationship("Voo", back_populates="aeroporto")
+
+

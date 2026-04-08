@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #1f2937;
+}
+
+a {
+  text-decoration: none;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar a {
+  color: #cbd5e1;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background: #1e293b;
+  color: white;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  background: white;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.page-content {
+  padding: 24px;
+}
+
+.card-resumo {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 180px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card-resumo p {
+  margin-top: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.dashboard-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.form-voo {
+  display: grid;
+  gap: 12px;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.form-voo input,
+.form-voo select,
+.form-voo button {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.form-voo button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.config-box {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 500px;
+}
+
+.simulacao-area {
+  margin-top: 20px;
+}
+
+.pista {
+  position: relative;
+  width: 800px;
+  height: 300px;
+  background: linear-gradient(to right, #4b5563, #6b7280);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 4px solid #374151;
+}
+
+.pista::before {
+  content: "";
+  position: absolute;
+  top: 145px;
+  left: 0;
+  width: 100%;
+  border-top: 6px dashed white;
+}
+
+.plane-sprite {
+  position: absolute;
+  font-size: 28px;
+  transition: all 0.8s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plane-sprite span {
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-top: 4px;
+}

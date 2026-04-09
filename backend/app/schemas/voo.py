@@ -12,6 +12,10 @@ class VooCreate(BaseModel):
     prioridade: int = 0
     emergencia: bool = False
     aeroporto_id: int
+    origem_id: int 
+    destino_id: int
+    distancia_km: float | None = None
+    tempo_estimado_min: float | None = None
 
 
 class VooResponse(BaseModel):
@@ -26,6 +30,10 @@ class VooResponse(BaseModel):
     prioridade: int
     emergencia: bool
     aeroporto_id: int
+    origem_id: int 
+    destino_id: int
+    distancia_km: float | None = None
+    tempo_estimado_min: float | None = None
 
     class Config:
         from_attributes = True

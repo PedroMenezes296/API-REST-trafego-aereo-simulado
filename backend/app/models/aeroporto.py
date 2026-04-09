@@ -24,6 +24,6 @@ class Aeroporto(Base):
     codigo_gps = Column(String, nullable=True)
     codigo_iata = Column(String, nullable=True)
 
-    voos = relationship("Voo", back_populates="aeroporto")
+    # voos = relationship("Voo", back_populates="aeroporto")
 
 

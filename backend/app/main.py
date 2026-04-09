@@ -5,6 +5,8 @@ from app.models import Aeroporto
 from app.api.aeroportos import router as aeroportos_router
 from app.api.voos import router as voos_router
 from app.api.operacoes import router as operacoes_router
+from app.api.emergencias import router as emergencias_router
+from app.api.ordem_operacional import router as ordem_operacional_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -17,6 +19,8 @@ app = FastAPI(
 app.include_router(aeroportos_router)
 app.include_router(voos_router)
 app.include_router(operacoes_router)
+app.include_router(emergencias_router)
+app.include_router(ordem_operacional_router)
 
 @app.get("/")
 def read_root():

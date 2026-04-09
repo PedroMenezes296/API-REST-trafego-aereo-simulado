@@ -11,7 +11,7 @@ from app.services.operacao_service import recalcular_ordem_operacional
 router = APIRouter(prefix="/recalculo-operacional", tags=["Recalculo Operacional"])
 
 
-@router.post("/", response_model=list[VooOrdemResponse])
+@router.get("/", response_model=list[VooOrdemResponse])
 def recalcular_operacao_do_dia(
     data: date = Query(..., description="Data da operação no formato YYYY-MM-DD"),
     db: Session = Depends(get_db)

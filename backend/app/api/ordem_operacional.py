@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.database.connection import get_db
 from app.models.voo import Voo
 from app.schemas.ordem_operacional import VooOrdemResponse
+from app.services.operacao_service import recalcular_ordem_operacional
 
 router = APIRouter(prefix="/ordem-operacional", tags=["Ordem Operacional"])
 
@@ -15,11 +16,13 @@ def listar_ordem_operacional(
     data: date = Query(..., description="Data da operação no formato YYYY-MM-DD"),
     db: Session = Depends(get_db)
 ):
-    voos = (
-        db.query(Voo)
-        .filter(Voo.data_operacao == data)
-        .order_by(Voo.prioridade.desc(), Voo.horario_previsto.asc())
-        .all()
-    )
+    voos = db.query(Voo).filter(Voo.data_operacao == data).all()
 
-    return voos
+    voos_recalculados = recalcular_ordem_operacional(voos)
+
+    for voo in voos_recalculados:
+        db.add(voo)
+
+    db.commit()
+
+    return sorted(voos_recalculados, key=lambda v: (-(v.prioridade or 0), v.horario_previsto))

@@ -9,6 +9,7 @@ class VooOrdemResponse(BaseModel):
     status: str
     data_operacao: date
     horario_previsto: datetime
+    horario_ajustado: datetime | None = None
     prioridade: int
     emergencia: bool
 

@@ -25,4 +25,4 @@ def listar_ordem_operacional(
 
     db.commit()
 
-    return sorted(voos_recalculados, key=lambda v: (-(v.prioridade or 0), v.horario_previsto))
+    return voos_recalculados  # já vem ordenado do service

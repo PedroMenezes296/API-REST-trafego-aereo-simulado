@@ -7,7 +7,6 @@ from app.api.voos import router as voos_router
 from app.api.operacoes import router as operacoes_router
 from app.api.emergencias import router as emergencias_router
 from app.api.ordem_operacional import router as ordem_operacional_router
-from app.api.recalculo_operacional import router as recalculo_operacional_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -22,7 +21,6 @@ app.include_router(voos_router)
 app.include_router(operacoes_router)
 app.include_router(emergencias_router)
 app.include_router(ordem_operacional_router)
-app.include_router(recalculo_operacional_router)
 
 @app.get("/")
 def read_root():

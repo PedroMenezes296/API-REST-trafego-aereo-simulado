@@ -9,4 +9,10 @@
 ### Comando
 
 ```bash
-uvicorn app.main:app --reload
+python -m uvicorn app.main:app --reload
+
+### Depois abrir no link
+
+http://127.0.0.1:8000/docs
+
+# e aqui vão estar os get e set para teste do programa

@@ -4,6 +4,8 @@
 
 1. Entre na pasta backend
 2. Ative o ambiente virtual
+-> está dentro da pasta .venv\Scripts\Activate.ps1
+-> exemplo da minha maquina: PS C:\Users\PedroMenezes\Documents\meusCodigos\Python\GerenciamentoTrafegoAereo-EngenhariaSoftware> & \backend\.venv\Scripts\Activate.ps1
 3. Execute o servidor
 
 ### Comando

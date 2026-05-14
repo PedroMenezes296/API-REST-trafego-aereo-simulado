@@ -1,31 +1,476 @@
-.simulacao-area {
-  margin-top: 20px;
+.simulacao-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.pista {
-  position: relative;
-  width: 800px;
-  height: 300px;
-  background: linear-gradient(to right, #4b5563, #6b7280);
+.simulacao-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.simulacao-top-left {
+  max-width: 760px;
+}
+
+.simulacao-badge {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.simulacao-top-left h1 {
+  margin: 0 0 10px;
+  font-size: 38px;
+  color: #0f172a;
+}
+
+.simulacao-top-left p {
+  margin: 0;
+  color: #475569;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.simulacao-top-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #e2e8f0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+}
+
+.simulacao-top-right label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.simulacao-top-right input {
+  padding: 10px 12px;
   border-radius: 12px;
-  overflow: hidden;
-  border: 4px solid #374151;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
 }
 
-.pista::before {
-  content: "";
+.simulacao-erro {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.simulacao-alerta {
+  padding: 16px 18px;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.simulacao-alerta.emergencia {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.simulacao-alerta.info {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.simulacao-acoes {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-simular-emergencia,
+.btn-restaurar-ordem {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.btn-simular-emergencia {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  box-shadow: 0 12px 24px rgba(220, 38, 38, 0.18);
+}
+
+.btn-restaurar-ordem {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.btn-simular-emergencia:hover,
+.btn-restaurar-ordem:hover {
+  transform: translateY(-1px);
+}
+
+.simulacao-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 22px;
+}
+
+.simulacao-pista-panel,
+.simulacao-tabela-panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+.panel-header span {
+  font-size: 13px;
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+.simulacao-area {
+  margin-top: 8px;
+}
+
+.pista-realista {
+  position: relative;
+  width: 100%;
+  min-height: 340px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #cfe5f7 0%, #d9ecfb 36%, #aeb7c3 36%, #717b8a 100%);
+  border: 1px solid #cbd5e1;
+}
+
+.ceu-faixa {
   position: absolute;
-  top: 145px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 36%;
+  background: linear-gradient(to bottom, #d9ecfb, #c7dcee);
+}
+
+.grama-faixa {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 18%;
+  background: linear-gradient(to bottom, #7a8797, #697381);
+}
+
+.pista-central {
+  position: absolute;
+  top: 118px;
+  left: 0;
+  width: 100%;
+  height: 96px;
+  background: linear-gradient(to bottom, #9aa3af, #7c8794);
+  border-top: 2px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.pista-marcas {
+  position: absolute;
+  top: 158px;
   left: 0;
   width: 100%;
   border-top: 6px dashed white;
 }
 
-.plane-sprite {
-  position: absolute;
-  font-size: 28px;
-  transition: all 0.8s ease;
+.aviao-destaque {
+  position: relative;
 }
-body {
-  background: red;
+
+.aviao-destaque.emergencia {
+  filter: drop-shadow(0 0 8px rgba(220, 38, 38, 0.45));
+}
+
+.torre-controle {
+  position: absolute;
+  right: 36px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.torre-topo {
+  width: 48px;
+  height: 22px;
+  background: #1e293b;
+  border-radius: 8px 8px 4px 4px;
+}
+
+.torre-base {
+  width: 18px;
+  height: 74px;
+  background: #475569;
+  border-radius: 4px;
+}
+
+.simulacao-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #475569;
+  font-size: 14px;
+}
+
+.legenda-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legenda-dot.azul {
+  background: #2563eb;
+}
+
+.legenda-dot.vermelho {
+  background: #dc2626;
+}
+
+.voo-atual-panel {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.voo-atual-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.voo-atual-header h4 {
+  margin: 0;
+  font-size: 20px;
+  color: #0f172a;
+}
+
+.tag-emergencia,
+.tag-normal {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tag-emergencia {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.tag-normal {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.voo-atual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.voo-info-card {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+.voo-info-card span {
+  display: block;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.voo-info-card strong {
+  display: block;
+  font-size: 15px;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+.simulacao-table-wrapper {
+  overflow-x: auto;
+}
+
+.simulacao-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.simulacao-table thead th {
+  text-align: left;
+  padding: 14px 12px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.simulacao-table tbody td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 14px;
+  color: #334155;
+}
+
+.simulacao-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+.linha-emergencia {
+  background: #fff7f7;
+}
+
+.tipo-badge,
+.emergencia-badge,
+.normal-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tipo-badge.chegada {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.tipo-badge.saida {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.emergencia-badge {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.normal-badge {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.simulacao-empty {
+  padding: 20px;
+  border-radius: 16px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
+  text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .simulacao-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .simulacao-top-left h1 {
+    font-size: 30px;
+  }
+
+  .simulacao-pista-panel,
+  .simulacao-tabela-panel {
+    padding: 18px;
+  }
+
+  .voo-atual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pista-realista {
+    min-height: 280px;
+  }
+}
+.simulacao-relogio {
+  margin-top: 18px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.simulacao-relogio span {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.simulacao-relogio strong {
+  font-size: 18px;
+  color: #0f172a;
+}
+.operacao-badge-pista {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.88);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 2;
 }

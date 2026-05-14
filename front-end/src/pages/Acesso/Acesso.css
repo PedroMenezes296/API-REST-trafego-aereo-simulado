@@ -1,0 +1,270 @@
+* {
+  box-sizing: border-box;
+}
+
+.acesso-wrapper {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.22), transparent 30%),
+    linear-gradient(135deg, #eef3f9 0%, #dfe7f1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  font-family: Arial, sans-serif;
+}
+
+.acesso-bg-shape {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(30px);
+  opacity: 0.35;
+  z-index: 0;
+}
+
+.acesso-bg-1 {
+  width: 260px;
+  height: 260px;
+  background: #2563eb;
+  top: 60px;
+  left: -40px;
+}
+
+.acesso-bg-2 {
+  width: 300px;
+  height: 300px;
+  background: #0f172a;
+  bottom: -80px;
+  right: -60px;
+}
+
+.acesso-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.acesso-brand {
+  background: linear-gradient(160deg, #0f172a 0%, #172554 100%);
+  color: white;
+  border-radius: 28px;
+  padding: 42px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.acesso-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #dbeafe;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.acesso-brand h1 {
+  font-size: 42px;
+  line-height: 1.1;
+  margin: 0 0 18px;
+}
+
+.acesso-brand p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #dbe4f0;
+  margin: 0 0 28px;
+  max-width: 560px;
+}
+
+.acesso-brand-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.brand-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px 20px;
+  backdrop-filter: blur(4px);
+}
+
+.brand-card strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.brand-card span {
+  color: #d8e2f0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.acesso-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 28px;
+  padding: 34px 30px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.14);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.acesso-card-header h2 {
+  font-size: 32px;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.acesso-card-header p {
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.acesso-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.acesso-toggle button {
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.acesso-toggle button:hover {
+  transform: translateY(-1px);
+  background: #eff6ff;
+}
+
+.acesso-toggle button.ativo {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28);
+}
+
+.acesso-form {
+  display: grid;
+  gap: 12px;
+}
+
+.acesso-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.acesso-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.acesso-form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.acesso-form button {
+  margin-top: 8px;
+  padding: 15px 18px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.acesso-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+}
+
+.acesso-erro {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 14px;
+  border: 1px solid #fecaca;
+}
+
+.acesso-footer {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 14px;
+}
+
+@media (max-width: 980px) {
+  .acesso-container {
+    grid-template-columns: 1fr;
+  }
+
+  .acesso-brand {
+    padding: 32px;
+  }
+
+  .acesso-brand h1 {
+    font-size: 34px;
+  }
+
+  .acesso-card {
+    padding: 28px 22px;
+  }
+}
+
+@media (max-width: 600px) {
+  .acesso-wrapper {
+    padding: 20px 14px;
+  }
+
+  .acesso-brand h1 {
+    font-size: 28px;
+  }
+
+  .acesso-card-header h2 {
+    font-size: 26px;
+  }
+
+  .acesso-toggle {
+    grid-template-columns: 1fr;
+  }
+}

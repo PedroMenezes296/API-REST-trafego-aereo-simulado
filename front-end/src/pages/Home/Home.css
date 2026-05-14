@@ -1,1 +1,307 @@
-/* vazio por enquanto */
+.home-modern-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.home-hero-v2 {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.home-hero-left {
+  background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 100%);
+  color: white;
+  border-radius: 26px;
+  padding: 34px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+}
+
+.home-tag {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #dbeafe;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.home-hero-left h1 {
+  margin: 0 0 14px;
+  font-size: 42px;
+  line-height: 1.08;
+}
+
+.home-hero-left p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #dbe4f0;
+  max-width: 720px;
+}
+
+.home-user-box {
+  margin-top: 24px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.home-user-box span {
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.home-user-box strong {
+  font-size: 16px;
+  color: white;
+}
+
+.home-stats {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.home-stat-card {
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.home-stat-card strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.home-stat-card span {
+  color: #dbe4f0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.home-hero-right {
+  display: grid;
+  grid-template-rows: 1.2fr 0.8fr;
+  gap: 20px;
+}
+
+.radar-card,
+.runway-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #dbe3ee;
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.radar-card {
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-circle {
+  position: absolute;
+  border: 1px solid rgba(37, 99, 235, 0.22);
+  border-radius: 50%;
+}
+
+.radar-circle-1 {
+  width: 120px;
+  height: 120px;
+}
+
+.radar-circle-2 {
+  width: 220px;
+  height: 220px;
+}
+
+.radar-circle-3 {
+  width: 320px;
+  height: 320px;
+}
+
+.radar-line {
+  position: absolute;
+  width: 160px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #2563eb);
+  transform: rotate(35deg);
+  transform-origin: left center;
+  animation: girarRadar 4s linear infinite;
+}
+
+.plane {
+  position: absolute;
+  font-size: 32px;
+  color: #1d4ed8;
+}
+
+.plane-1 {
+  top: 70px;
+  right: 110px;
+}
+
+.plane-2 {
+  left: 95px;
+  bottom: 105px;
+}
+
+.plane-3 {
+  right: 70px;
+  bottom: 70px;
+}
+
+.radar-label {
+  position: absolute;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1e3a8a;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.radar-label-1 {
+  top: 24px;
+  left: 24px;
+}
+
+.radar-label-2 {
+  bottom: 24px;
+  right: 24px;
+}
+
+.runway-card {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.runway {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 18px;
+  background: linear-gradient(to right, #4b5563, #6b7280);
+  overflow: hidden;
+  border: 3px solid #374151;
+}
+
+.runway-line {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  width: 100%;
+  border-top: 6px dashed white;
+}
+
+.runway-plane {
+  position: absolute;
+  top: 40px;
+  left: 28px;
+  font-size: 34px;
+  color: white;
+  animation: moverAviao 5s linear infinite;
+}
+
+.home-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.home-info-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+}
+
+.home-info-card h3 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+.home-info-card p {
+  margin: 0;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.home-info-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #475569;
+  line-height: 1.9;
+}
+
+.home-info-card.destaque {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+@keyframes moverAviao {
+  0% {
+    left: 28px;
+  }
+  100% {
+    left: calc(100% - 70px);
+  }
+}
+
+@keyframes girarRadar {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1100px) {
+  .home-hero-v2 {
+    grid-template-columns: 1fr;
+  }
+
+  .home-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-hero-left {
+    padding: 24px;
+  }
+
+  .home-hero-left h1 {
+    font-size: 30px;
+  }
+
+  .home-hero-left p {
+    font-size: 15px;
+  }
+
+  .home-info-card,
+  .radar-card,
+  .runway-card {
+    padding: 20px;
+  }
+}

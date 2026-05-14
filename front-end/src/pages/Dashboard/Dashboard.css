@@ -1,1 +1,281 @@
-/* vazio por enquanto */
+.dashboard-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard-top-left {
+  max-width: 720px;
+}
+
+.dashboard-badge {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.dashboard-top-left h1 {
+  margin: 0 0 10px;
+  font-size: 38px;
+  color: #0f172a;
+}
+
+.dashboard-top-left p {
+  margin: 0;
+  color: #475569;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.dashboard-top-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e2e8f0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+}
+
+.dashboard-top-right label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.dashboard-top-right input {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+}
+
+.dashboard-erro {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.dashboard-cards-modern {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.dashboard-card-modern {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+}
+
+.dashboard-card-modern.destaque {
+  background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 100%);
+  color: white;
+  border: none;
+}
+
+.dashboard-card-modern span {
+  display: block;
+  font-size: 14px;
+  color: inherit;
+  opacity: 0.82;
+  margin-bottom: 10px;
+}
+
+.dashboard-card-modern strong {
+  display: block;
+  font-size: 34px;
+  margin-bottom: 10px;
+  color: inherit;
+}
+
+.dashboard-card-modern p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: inherit;
+  opacity: 0.86;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+}
+
+.dashboard-panel,
+.dashboard-table-panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
+}
+
+.dashboard-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.dashboard-panel-header h3 {
+  margin: 0;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+.dashboard-panel-header span {
+  font-size: 13px;
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+.dashboard-summary-list {
+  display: grid;
+  gap: 12px;
+}
+
+.dashboard-summary-item,
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.dashboard-summary-item span,
+.status-row span {
+  color: #475569;
+  font-size: 14px;
+}
+
+.dashboard-summary-item strong,
+.status-row strong {
+  color: #0f172a;
+  font-size: 16px;
+}
+
+.dashboard-status-box {
+  display: grid;
+  gap: 12px;
+}
+
+.dashboard-table-wrapper {
+  overflow-x: auto;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-table thead th {
+  text-align: left;
+  padding: 14px 12px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.dashboard-table tbody td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 14px;
+  color: #334155;
+}
+
+.dashboard-table tbody tr:hover {
+  background: #f8fbff;
+}
+
+.tipo-badge,
+.emergencia-badge,
+.normal-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tipo-badge.chegada {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.tipo-badge.saida {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.emergencia-badge {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.normal-badge {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.dashboard-empty {
+  padding: 20px;
+  border-radius: 16px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-cards-modern {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-cards-modern {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-top-left h1 {
+    font-size: 30px;
+  }
+
+  .dashboard-panel,
+  .dashboard-table-panel,
+  .dashboard-card-modern {
+    padding: 18px;
+  }
+}

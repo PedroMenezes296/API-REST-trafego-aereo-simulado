@@ -14,11 +14,11 @@ Diferente de sistemas reais de controle de tráfego aéreo, este projeto utiliza
 
 Desenvolver uma plataforma capaz de:
 
-* Monitorar aeronaves em tempo real em um mapa interativo
-* Simular voos com base em rotas entre aeroportos
-* Gerenciar operações de pouso e decolagem
-* Gerar alertas de proximidade e conflito entre aeronaves
-* Registrar histórico de voos e eventos operacionais
+- Monitorar aeronaves em tempo real em um mapa interativo
+- Simular voos com base em rotas entre aeroportos
+- Gerenciar operações de pouso e decolagem
+- Gerar alertas de proximidade e conflito entre aeronaves
+- Registrar histórico de voos e eventos operacionais
 
 ---
 
@@ -26,13 +26,13 @@ Desenvolver uma plataforma capaz de:
 
 O sistema utiliza um modelo híbrido:
 
-* **Dados reais estáticos**
+- **Dados reais estáticos**
   Informações de aeroportos, pistas e aeronaves para aumentar o realismo
 
-* **Simulação de eventos (SimPy)**
+- **Simulação de eventos (SimPy)**
   Cada voo é tratado como um processo que evolui ao longo do tempo, passando por diferentes fases operacionais
 
-* **Telemetria simulada (GPS virtual)**
+- **Telemetria simulada (GPS virtual)**
   A posição das aeronaves é gerada dinamicamente (latitude, longitude, altitude, velocidade e direção)
 
 ---
@@ -41,44 +41,43 @@ O sistema utiliza um modelo híbrido:
 
 ### ✈️ Gestão de Entidades
 
-* Cadastro de aeronaves
-* Cadastro de aeroportos e pistas
-* Cadastro e controle de voos
-* Sistema de usuários com autenticação
+- Cadastro de aeronaves
+- Cadastro de aeroportos e pistas
+- Cadastro e controle de voos
+- Sistema de usuários com autenticação
 
 ### 📡 Monitoramento em Tempo Real
 
-* Visualização das aeronaves em mapa
-* Atualização contínua da posição (telemetria simulada)
-* Exibição da fase atual do voo
+- Visualização das aeronaves em mapa
+- Atualização contínua da posição (telemetria simulada).
+- Exibição da fase atual do voo
 
 ### 🧭 Simulação de Voo
 
-* Controle de estados do voo:
+- Controle de estados do voo:
+  - Agendado
+  - Taxiando
+  - Decolando
+  - Cruzeiro
+  - Aproximação
+  - Pouso
+  - Finalizado
 
-  * Agendado
-  * Taxiando
-  * Decolando
-  * Cruzeiro
-  * Aproximação
-  * Pouso
-  * Finalizado
+- Geração de trajetória entre origem e destino
 
-* Geração de trajetória entre origem e destino
-
-* Evolução baseada em eventos discretos
+- Evolução baseada em eventos discretos
 
 ### 🚨 Sistema de Alertas
 
-* Detecção de proximidade entre aeronaves
-* Geração de alertas com níveis de severidade
-* Registro de eventos operacionais
+- Detecção de proximidade entre aeronaves
+- Geração de alertas com níveis de severidade
+- Registro de eventos operacionais
 
 ### 📊 Histórico e Rastreamento
 
-* Armazenamento de posições ao longo do tempo
-* Visualização da rota percorrida
-* Consulta de histórico de voos
+- Armazenamento de posições ao longo do tempo
+- Visualização da rota percorrida
+- Consulta de histórico de voos
 
 ---
 
@@ -86,16 +85,16 @@ O sistema utiliza um modelo híbrido:
 
 O sistema é estruturado em camadas:
 
-* **Backend (API)**
+- **Backend (API)**
   Responsável pelas regras de negócio, persistência de dados e integração com o simulador
 
-* **Simulador (SimPy)**
+- **Simulador (SimPy)**
   Motor responsável por controlar os eventos e gerar a telemetria das aeronaves
 
-* **Banco de Dados**
+- **Banco de Dados**
   Armazena entidades, posições, voos e alertas
 
-* **Frontend (Interface Web)**
+- **Frontend (Interface Web)**
   Responsável pela visualização dos dados, incluindo mapa interativo e dashboard
 
 ---
@@ -104,25 +103,25 @@ O sistema é estruturado em camadas:
 
 ### Backend
 
-* Python
-* FastAPI
-* SQLAlchemy
-* PostgreSQL
+- Python
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
 
 ### Simulação
 
-* SimPy
-* Geopy
+- SimPy
+- Geopy
 
 ### Frontend
 
-* JavaScript
-* Leaflet (mapas interativos)
+- JavaScript
+- Leaflet (mapas interativos)
 
 ### Outros
 
-* WebSocket (planejado para tempo real)
-* JWT para autenticação
+- WebSocket (planejado para tempo real)
+- JWT para autenticação
 
 ---
 
@@ -140,22 +139,22 @@ docs/
 
 Este projeto foi desenvolvido como parte da disciplina de Engenharia de Software, com o objetivo de aplicar na prática:
 
-* Levantamento de requisitos
-* Modelagem UML
-* Arquitetura de sistemas
-* Desenvolvimento orientado a camadas
-* Simulação de sistemas complexos
-* Trabalho em equipe com controle de versão
+- Levantamento de requisitos
+- Modelagem UML
+- Arquitetura de sistemas
+- Desenvolvimento orientado a camadas
+- Simulação de sistemas complexos
+- Trabalho em equipe com controle de versão
 
 ---
 
 ## 🚀 Diferenciais do Projeto
 
-* Uso de simulação de eventos discretos (SimPy)
-* Representação realista de operações aéreas
-* Integração entre simulação e visualização em tempo real
-* Estrutura modular e escalável
-* Aplicação prática de conceitos de engenharia
+- Uso de simulação de eventos discretos (SimPy)
+- Representação realista de operações aéreas
+- Integração entre simulação e visualização em tempo real
+- Estrutura modular e escalável
+- Aplicação prática de conceitos de engenharia
 
 ---
 

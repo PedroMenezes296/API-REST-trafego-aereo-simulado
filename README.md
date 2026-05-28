@@ -37,6 +37,59 @@ O sistema utiliza um modelo híbrido:
 
 ---
 
+## ⚙️ Como executar o projeto
+
+## Frontend:
+  ### 1. Clone o repositório
+
+  ```bash
+  git clone https://github.com/PedroMenezes296/API-REST-trafego-aereo-simulado.git
+  ```
+
+  ### 2. Acesse a pasta do frontend
+
+  ```bash
+  cd frontend
+  ```
+
+  ### 3. Instale as dependências
+
+  ```bash
+  npm install
+  ```
+
+  ### 4. Execute o projeto
+
+  ```bash
+  npm run dev
+  ```
+
+  ### 5. Acesse no navegador
+
+  ```
+  http://localhost:5173/
+  ```
+
+## Backend
+
+  ## Como rodar o projeto
+
+  1. Entre na pasta backend
+  2. Ative o ambiente virtual
+  -> está dentro da pasta .venv\Scripts\Activate.ps1
+  -> exemplo da minha maquina: PS C:\Users\PedroMenezes\Documents\meusCodigos\Python\GerenciamentoTrafegoAereo-EngenhariaSoftware> & \backend\.venv\Scripts\Activate.ps1
+  3. Execute o servidor
+
+  ### Comando
+
+  ```bash
+    python -m uvicorn app.main:app --reload
+  ```
+
+  ### Depois abrir no link
+
+  http://127.0.0.1:8000/docs
+
 ## ⚙️ Funcionalidades
 
 ### ✈️ Gestão de Entidades

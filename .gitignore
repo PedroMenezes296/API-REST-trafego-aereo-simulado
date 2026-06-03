@@ -19,3 +19,7 @@ __pycache__/
 node_modules/
 dist/
 build/
+
+# arquivos MD
+CLAUDE.md
+docs/plano-de-melhorias.md

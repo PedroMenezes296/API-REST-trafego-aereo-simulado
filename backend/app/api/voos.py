@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database.connection import get_db
 from app.models.voo import Voo
 from app.models.aeroporto import Aeroporto
-from app.schemas.voo import VooCreate, VooResponse
+from app.schemas.voo import VooCreate, VooResponse, VooUpdate
 
 router = APIRouter(prefix="/voos", tags=["Voos"])
 
@@ -59,5 +59,21 @@ def buscar_voo(voo_id: int, db: Session = Depends(get_db)):
 
     if not voo:
         raise HTTPException(status_code=404, detail="Voo não encontrado")
+
+    return voo
+
+
+@router.patch("/{voo_id}", response_model=VooResponse)
+def atualizar_voo(voo_id: int, dados: VooUpdate, db: Session = Depends(get_db)):
+    voo = db.query(Voo).filter(Voo.id == voo_id).first()
+
+    if not voo:
+        raise HTTPException(status_code=404, detail="Voo não encontrado")
+
+    for campo, valor in dados.model_dump(exclude_unset=True).items():
+        setattr(voo, campo, valor)
+
+    db.commit()
+    db.refresh(voo)
 
     return voo

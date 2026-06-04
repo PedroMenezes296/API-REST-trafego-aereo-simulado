@@ -2,10 +2,24 @@ import { useEffect, useState } from "react";
 import "./CadastroVoo.css";
 import { criarVoo, listarAeroportos } from "../../services/api.js";
 
+function haversineKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const toRad = (d) => (d * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
 function CadastroVoo() {
   const [aeroportos, setAeroportos] = useState([]);
   const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [distanciaCalculada, setDistanciaCalculada] = useState(null);
+  const [tempoCalculado, setTempoCalculado] = useState(null);
 
   const [form, setForm] = useState({
     codigo_voo: "",
@@ -25,25 +39,43 @@ function CadastroVoo() {
     async function carregarAeroportos() {
       try {
         const dados = await listarAeroportos();
-        const ordenados = [...dados].sort((a, b) =>
-          a.nome.localeCompare(b.nome),
-        );
+        const ordenados = [...dados].sort((a, b) => a.nome.localeCompare(b.nome));
         setAeroportos(ordenados);
-      } catch (err) {
+      } catch {
         setErro("Erro ao carregar aeroportos.");
       }
     }
-
     carregarAeroportos();
   }, []);
 
+  function calcularDistancia(origemId, destinoId) {
+    if (!origemId || !destinoId || origemId === destinoId) {
+      setDistanciaCalculada(null);
+      setTempoCalculado(null);
+      return;
+    }
+    const origem = aeroportos.find((a) => a.id === Number(origemId));
+    const destino = aeroportos.find((a) => a.id === Number(destinoId));
+    if (origem && destino) {
+      const dist = haversineKm(
+        origem.latitude, origem.longitude,
+        destino.latitude, destino.longitude,
+      );
+      setDistanciaCalculada(Math.round(dist));
+      setTempoCalculado(Math.round((dist / 800) * 60));
+    }
+  }
+
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
+    const newForm = { ...form, [name]: type === "checkbox" ? checked : value };
+    setForm(newForm);
 
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    if (name === "origem_id" || name === "destino_id") {
+      const origemId = name === "origem_id" ? value : newForm.origem_id;
+      const destinoId = name === "destino_id" ? value : newForm.destino_id;
+      calcularDistancia(origemId, destinoId);
+    }
   }
 
   async function handleSubmit(e) {
@@ -56,6 +88,7 @@ function CadastroVoo() {
       return;
     }
 
+    setLoading(true);
     try {
       const payload = {
         ...form,
@@ -64,13 +97,15 @@ function CadastroVoo() {
         destino_id: Number(form.destino_id),
         prioridade: Number(form.prioridade),
         horario_previsto: new Date(form.horario_previsto).toISOString(),
-        distancia_km: null,
-        tempo_estimado_min: null,
+        distancia_km: distanciaCalculada,
+        tempo_estimado_min: tempoCalculado,
       };
 
       await criarVoo(payload);
 
       setMensagem("Voo cadastrado com sucesso.");
+      setDistanciaCalculada(null);
+      setTempoCalculado(null);
       setForm({
         codigo_voo: "",
         tipo_operacao: "chegada",
@@ -86,6 +121,8 @@ function CadastroVoo() {
       });
     } catch (err) {
       setErro(err.message || "Erro ao cadastrar voo.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -124,11 +161,7 @@ function CadastroVoo() {
 
             <div className="campo">
               <label>Tipo de operação</label>
-              <select
-                name="tipo_operacao"
-                value={form.tipo_operacao}
-                onChange={handleChange}
-              >
+              <select name="tipo_operacao" value={form.tipo_operacao} onChange={handleChange}>
                 <option value="chegada">Chegada</option>
                 <option value="saida">Saída</option>
               </select>
@@ -212,10 +245,8 @@ function CadastroVoo() {
                 required
               >
                 <option value="">Selecione o aeroporto controlado</option>
-                {aeroportos.map((aeroporto) => (
-                  <option key={aeroporto.id} value={aeroporto.id}>
-                    {aeroporto.nome}
-                  </option>
+                {aeroportos.map((a) => (
+                  <option key={a.id} value={a.id}>{a.nome}</option>
                 ))}
               </select>
             </div>
@@ -229,10 +260,8 @@ function CadastroVoo() {
                 required
               >
                 <option value="">Selecione a origem</option>
-                {aeroportos.map((aeroporto) => (
-                  <option key={aeroporto.id} value={aeroporto.id}>
-                    {aeroporto.nome}
-                  </option>
+                {aeroportos.map((a) => (
+                  <option key={a.id} value={a.id}>{a.nome}</option>
                 ))}
               </select>
             </div>
@@ -246,18 +275,40 @@ function CadastroVoo() {
                 required
               >
                 <option value="">Selecione o destino</option>
-                {aeroportos.map((aeroporto) => (
-                  <option key={aeroporto.id} value={aeroporto.id}>
-                    {aeroporto.nome}
-                  </option>
+                {aeroportos.map((a) => (
+                  <option key={a.id} value={a.id}>{a.nome}</option>
                 ))}
               </select>
             </div>
+
+            {distanciaCalculada !== null && (
+              <>
+                <div className="campo">
+                  <label>Distância estimada</label>
+                  <input
+                    type="text"
+                    value={`${distanciaCalculada.toLocaleString("pt-BR")} km`}
+                    readOnly
+                  />
+                </div>
+
+                <div className="campo">
+                  <label>Tempo estimado de voo</label>
+                  <input
+                    type="text"
+                    value={`${tempoCalculado} min (~${Math.floor(tempoCalculado / 60)}h ${tempoCalculado % 60}min)`}
+                    readOnly
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
 
         <div className="cadastro-actions">
-          <button type="submit">Cadastrar voo</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Cadastrando..." : "Cadastrar voo"}
+          </button>
         </div>
       </form>
     </section>

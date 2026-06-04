@@ -1,5 +1,13 @@
 from datetime import date, datetime
+from typing import Optional
 from pydantic import BaseModel
+
+
+class VooUpdate(BaseModel):
+    status: Optional[str] = None
+    horario_real: Optional[datetime] = None
+    prioridade: Optional[int] = None
+    emergencia: Optional[bool] = None
 
 
 class VooCreate(BaseModel):

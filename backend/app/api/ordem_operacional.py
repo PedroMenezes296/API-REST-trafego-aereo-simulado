@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session, aliased
@@ -11,24 +12,37 @@ from app.services.operacao_service import recalcular_ordem_operacional
 
 router = APIRouter(prefix="/ordem-operacional", tags=["Ordem Operacional"])
 
-def buscar_voos_por_tipo(db: Session, data: date, tipo_operacao: str = None):
+
+def buscar_voos_por_tipo(
+    db: Session,
+    data: date,
+    tipo_operacao: str = None,
+    aeroporto_id: int = None,
+):
     Origem = aliased(Aeroporto)
     Destino = aliased(Aeroporto)
-    query = (db.query(
-            Voo,
-            Origem.nome.label("origem_nome"),
-            Destino.nome.label("destino_nome"),
-        )
+    query = (
+        db.query(Voo, Origem.nome.label("origem_nome"), Destino.nome.label("destino_nome"))
         .join(Origem, Voo.origem_id == Origem.id)
         .join(Destino, Voo.destino_id == Destino.id)
-        .filter(Voo.data_operacao == data))
+        .filter(Voo.data_operacao == data)
+    )
     if tipo_operacao:
         query = query.filter(Voo.tipo_operacao == tipo_operacao)
+    if aeroporto_id:
+        query = query.filter(Voo.aeroporto_id == aeroporto_id)
+
     resultados = query.order_by(Voo.prioridade.desc(), Voo.horario_previsto.asc()).all()
 
-    resposta = []
+    voos_objs = [row[0] for row in resultados]
+    nomes = {row[0].id: (row[1], row[2]) for row in resultados}
 
-    for voo, origem_nome, destino_nome in resultados:
+    # Calcula horario_ajustado em memória (não persiste no banco)
+    voos_reescalonados = recalcular_ordem_operacional(voos_objs)
+
+    resposta = []
+    for voo in voos_reescalonados:
+        origem_nome, destino_nome = nomes.get(voo.id, (None, None))
         resposta.append({
             "id": voo.id,
             "codigo_voo": voo.codigo_voo,
@@ -46,24 +60,30 @@ def buscar_voos_por_tipo(db: Session, data: date, tipo_operacao: str = None):
         })
 
     return resposta
-    
+
+
 @router.get("/", response_model=list[VooOrdemResponse])
 def listar_ordem_operacional(
     data: date = Query(..., description="Data da operação no formato YYYY-MM-DD"),
-    db: Session = Depends(get_db)
+    aeroporto_id: Optional[int] = Query(None, description="Filtrar por ID do aeroporto"),
+    db: Session = Depends(get_db),
 ):
-    return buscar_voos_por_tipo(db, data)
+    return buscar_voos_por_tipo(db, data, aeroporto_id=aeroporto_id)
+
 
 @router.get("/chegadas", response_model=list[VooOrdemResponse])
 def listar_chegadas(
     data: date = Query(..., description="Data da operação no formato YYYY-MM-DD"),
-    db: Session = Depends(get_db)
+    aeroporto_id: Optional[int] = Query(None, description="Filtrar por ID do aeroporto"),
+    db: Session = Depends(get_db),
 ):
-    return buscar_voos_por_tipo(db, data, "chegada")
+    return buscar_voos_por_tipo(db, data, "chegada", aeroporto_id=aeroporto_id)
+
 
 @router.get("/saidas", response_model=list[VooOrdemResponse])
 def listar_saidas(
     data: date = Query(..., description="Data da operação no formato YYYY-MM-DD"),
-    db: Session = Depends(get_db)
+    aeroporto_id: Optional[int] = Query(None, description="Filtrar por ID do aeroporto"),
+    db: Session = Depends(get_db),
 ):
-    return buscar_voos_por_tipo(db, data, "saida")
+    return buscar_voos_por_tipo(db, data, "saida", aeroporto_id=aeroporto_id)

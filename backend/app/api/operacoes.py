@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.database.connection import get_db
 from app.models.voo import Voo
 from app.schemas.operacoes import ResumoOperacionalResponse
+from app.simulator.motor import detectar_conflitos
 
 router = APIRouter(prefix="/operacoes", tags=["Operações"])
 
@@ -33,3 +34,17 @@ def resumo_operacional_por_dia(
         total_saidas=total_saidas,
         total_operacoes=total_operacoes
     )
+
+
+@router.get("/conflitos")
+def listar_conflitos(
+    data: date = Query(..., description="Data da operação no formato YYYY-MM-DD"),
+    db: Session = Depends(get_db),
+):
+    voos = (
+        db.query(Voo)
+        .filter(Voo.data_operacao == data)
+        .order_by(Voo.horario_previsto.asc())
+        .all()
+    )
+    return detectar_conflitos(voos)

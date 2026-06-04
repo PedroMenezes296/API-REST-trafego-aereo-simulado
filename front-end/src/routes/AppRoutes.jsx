@@ -8,6 +8,7 @@ import CadastroVoo from "../pages/CadastroVoo/CadastroVoo";
 import Configuracoes from "../pages/Configuracoes/Configuracoes";
 import Simulacao from "../pages/Simulacao/Simulacao";
 import Acesso from "../pages/Acesso/Acesso";
+import NotFound from "../components/NotFound";
 
 function AppRoutes() {
   return (
@@ -56,6 +57,7 @@ function AppRoutes() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./Dashboard.css";
 import { listarOrdemOperacional, resumoOperacional } from "../../services/api";
 
@@ -9,23 +9,39 @@ function Dashboard() {
   const [resumo, setResumo] = useState(null);
   const [ordem, setOrdem] = useState([]);
   const [erro, setErro] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const carregarDados = useCallback(async () => {
+    try {
+      setErro("");
+      setLoading(true);
+      const [resumoData, ordemData] = await Promise.all([
+        resumoOperacional(dataSelecionada),
+        listarOrdemOperacional(dataSelecionada),
+      ]);
+      setResumo(resumoData);
+      setOrdem(ordemData);
+    } catch {
+      setErro("Erro ao carregar dados do dashboard.");
+    } finally {
+      setLoading(false);
+    }
+  }, [dataSelecionada]);
 
   useEffect(() => {
-    async function carregarDados() {
-      try {
-        setErro("");
-        const resumoData = await resumoOperacional(dataSelecionada);
-        const ordemData = await listarOrdemOperacional(dataSelecionada);
-
-        setResumo(resumoData);
-        setOrdem(ordemData);
-      } catch (err) {
-        setErro("Erro ao carregar dados do dashboard.");
-      }
-    }
-
     carregarDados();
-  }, [dataSelecionada]);
+  }, [carregarDados]);
+
+  // Polling controlado pelas Configurações
+  useEffect(() => {
+    const autoUpdate = localStorage.getItem("config_atualizacao_auto") !== "false";
+    const intervaloSeg = parseInt(localStorage.getItem("config_intervalo") || "5", 10);
+
+    if (!autoUpdate) return;
+
+    const timer = setInterval(carregarDados, intervaloSeg * 1000);
+    return () => clearInterval(timer);
+  }, [carregarDados]);
 
   return (
     <section className="dashboard-modern">
@@ -54,25 +70,25 @@ function Dashboard() {
       <div className="dashboard-cards-modern">
         <div className="dashboard-card-modern destaque">
           <span>Total de Operações</span>
-          <strong>{resumo ? resumo.total_operacoes : "..."}</strong>
+          <strong>{loading ? "..." : resumo ? resumo.total_operacoes : "—"}</strong>
           <p>Total consolidado de movimentações registradas para a data.</p>
         </div>
 
         <div className="dashboard-card-modern">
           <span>Chegadas</span>
-          <strong>{resumo ? resumo.total_chegadas : "..."}</strong>
+          <strong>{loading ? "..." : resumo ? resumo.total_chegadas : "—"}</strong>
           <p>Voos previstos ou registrados com operação de chegada.</p>
         </div>
 
         <div className="dashboard-card-modern">
           <span>Saídas</span>
-          <strong>{resumo ? resumo.total_saidas : "..."}</strong>
+          <strong>{loading ? "..." : resumo ? resumo.total_saidas : "—"}</strong>
           <p>Voos previstos ou registrados com operação de saída.</p>
         </div>
 
         <div className="dashboard-card-modern">
           <span>Voos em Ordem</span>
-          <strong>{ordem ? ordem.length : "..."}</strong>
+          <strong>{loading ? "..." : ordem ? ordem.length : "—"}</strong>
           <p>Quantidade de voos atualmente listados na ordem operacional.</p>
         </div>
       </div>
@@ -110,7 +126,7 @@ function Dashboard() {
         <div className="dashboard-panel">
           <div className="dashboard-panel-header">
             <h3>Status do Painel</h3>
-            <span>Online</span>
+            <span>{loading ? "Atualizando..." : "Online"}</span>
           </div>
 
           <div className="dashboard-status-box">
@@ -142,7 +158,7 @@ function Dashboard() {
 
         {ordem.length === 0 ? (
           <div className="dashboard-empty">
-            Nenhum voo encontrado para a data selecionada.
+            {loading ? "Carregando..." : "Nenhum voo encontrado para a data selecionada."}
           </div>
         ) : (
           <div className="dashboard-table-wrapper">

@@ -49,6 +49,7 @@
   padding: 16px 18px;
   border-radius: 18px;
   box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  min-width: 220px;
 }
 
 .simulacao-top-right label {
@@ -57,11 +58,13 @@
   color: #334155;
 }
 
-.simulacao-top-right input {
+.simulacao-top-right input,
+.simulacao-top-right select {
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid #cbd5e1;
   font-size: 14px;
+  background: white;
 }
 
 .simulacao-erro {
@@ -202,9 +205,47 @@
   left: 0;
   width: 100%;
   height: 96px;
-  background: linear-gradient(to bottom, #9aa3af, #7c8794);
+  background: linear-gradient(to bottom, #8a949f, #6b7480);
   border-top: 2px solid rgba(255, 255, 255, 0.35);
   border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.pista-threshold {
+  position: absolute;
+  top: 0;
+  width: 44px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 8px 0;
+  gap: 4px;
+}
+
+.pista-threshold-esq {
+  left: 0;
+}
+
+.pista-threshold-dir {
+  right: 0;
+}
+
+.pista-threshold::before,
+.pista-threshold::after {
+  content: "";
+  display: block;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 2px;
+  margin: 0 8px;
+}
+
+.pista-threshold::before {
+  margin-bottom: 6px;
+}
+
+.pista-threshold::after {
+  margin-top: 6px;
 }
 
 .pista-marcas {
@@ -232,11 +273,31 @@
   align-items: center;
 }
 
+.torre-antena {
+  width: 3px;
+  height: 16px;
+  background: #94a3b8;
+  border-radius: 2px;
+}
+
 .torre-topo {
-  width: 48px;
-  height: 22px;
+  width: 52px;
+  height: 24px;
   background: #1e293b;
   border-radius: 8px 8px 4px 4px;
+  position: relative;
+}
+
+.torre-topo::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  width: 10px;
+  height: 10px;
+  background: rgba(125, 211, 252, 0.85);
+  border-radius: 2px;
+  box-shadow: 14px 0 0 rgba(125, 211, 252, 0.85), 28px 0 0 rgba(125, 211, 252, 0.85);
 }
 
 .torre-base {
@@ -473,4 +534,23 @@
   font-size: 13px;
   font-weight: 700;
   z-index: 2;
+}
+
+.aeroporto-iata-badge {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.aeroporto-nome-pista {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 10px;
+  font-weight: 500;
 }

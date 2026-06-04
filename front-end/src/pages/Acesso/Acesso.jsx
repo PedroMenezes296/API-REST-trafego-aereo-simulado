@@ -40,7 +40,9 @@ function Acesso() {
       return;
     }
 
-    if (login !== "admin" || senha !== "1234") {
+    const loginEsperado = import.meta.env.VITE_ADMIN_LOGIN;
+    const senhaEsperada = import.meta.env.VITE_ADMIN_SENHA;
+    if (login !== loginEsperado || senha !== senhaEsperada) {
       setErro("Credenciais administrativas inválidas.");
       return;
     }

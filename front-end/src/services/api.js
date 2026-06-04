@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
 
 async function tratarResposta(res) {
   if (!res.ok) {
@@ -21,12 +21,18 @@ export async function listarVoos() {
 export async function criarVoo(dados) {
   const res = await fetch(`${API_BASE_URL}/voos/`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(dados),
   });
+  return tratarResposta(res);
+}
 
+export async function atualizarVoo(vooId, dados) {
+  const res = await fetch(`${API_BASE_URL}/voos/${vooId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados),
+  });
   return tratarResposta(res);
 }
 
@@ -35,8 +41,10 @@ export async function resumoOperacional(data) {
   return tratarResposta(res);
 }
 
-export async function listarOrdemOperacional(data) {
-  const res = await fetch(`${API_BASE_URL}/ordem-operacional/?data=${data}`);
+export async function listarOrdemOperacional(data, aeroportoId = null) {
+  let url = `${API_BASE_URL}/ordem-operacional/?data=${data}`;
+  if (aeroportoId) url += `&aeroporto_id=${aeroportoId}`;
+  const res = await fetch(url);
   return tratarResposta(res);
 }
 
@@ -44,6 +52,5 @@ export async function marcarEmergencia(vooId) {
   const res = await fetch(`${API_BASE_URL}/emergencias/${vooId}`, {
     method: "PATCH",
   });
-
   return tratarResposta(res);
 }

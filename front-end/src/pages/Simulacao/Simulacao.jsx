@@ -70,14 +70,21 @@ function Simulacao() {
   }, [modoSimulacao, vooAtual]);
 
   const proximosVoos = useMemo(() => {
-    if (voos.length === 0) return [];
+    if (voos.length === 0 || !horaSimulada) return [];
 
-    if (modoSimulacao === "operacao") {
-      return voos.slice(indiceAtual, indiceAtual + 10);
-    }
+    const agora = horaSimulada.getTime();
+    const toleranciaMs = 30 * 1000;
 
-    return voos.slice(indiceAtual + 1, indiceAtual + 11);
-  }, [voos, indiceAtual, modoSimulacao]);
+    return voos
+      .filter((voo) => {
+        const horarioReferencia = new Date(
+          voo.horario_ajustado || voo.horario_previsto,
+        ).getTime();
+
+        return horarioReferencia > agora - toleranciaMs;
+      })
+      .slice(0, 10);
+  }, [voos, horaSimulada]);
 
   function obterNomeOperacao(voo) {
     if (!voo) return "-";
@@ -218,36 +225,68 @@ function Simulacao() {
   }, [horaSimulada, modoSimulacao, proximoVoo]);
 
   function simularEmergencia() {
-    if (voos.length === 0) return;
+    if (voos.length === 0 || !horaSimulada) return;
 
     const vooSelecionado = voos[voos.length - 1];
+    const horarioBase = new Date(horaSimulada);
+    const LIMITE_REAJUSTE_MINUTOS = 30;
 
-    const atualizados = voos.map((voo) =>
+    const atualizadosBase = voos.map((voo) =>
       voo.id === vooSelecionado.id
         ? {
             ...voo,
             emergencia: true,
             prioridade: 999,
             status: "emergencia",
+            horario_efetivo_emergencia: horarioBase.toISOString(),
           }
         : voo,
     );
 
-    atualizados.sort((a, b) => {
+    atualizadosBase.sort((a, b) => {
       if (b.prioridade !== a.prioridade) {
         return b.prioridade - a.prioridade;
       }
       return new Date(a.horario_previsto) - new Date(b.horario_previsto);
     });
 
+    let voosAfetados = 0;
+
+    const atualizados = atualizadosBase.map((voo, index) => {
+      if (index === 0) {
+        return {
+          ...voo,
+          horario_ajustado: horarioBase.toISOString(),
+        };
+      }
+
+      const horarioOriginal = new Date(voo.horario_previsto);
+      const diferencaMinutos =
+        (horarioOriginal.getTime() - horarioBase.getTime()) / 60000;
+
+      if (diferencaMinutos <= LIMITE_REAJUSTE_MINUTOS) {
+        voosAfetados += 1;
+
+        const novoHorario = new Date(
+          horarioBase.getTime() + voosAfetados * 5 * 60000,
+        );
+
+        return {
+          ...voo,
+          horario_ajustado: novoHorario.toISOString(),
+        };
+      }
+
+      return {
+        ...voo,
+        horario_ajustado: voo.horario_ajustado || voo.horario_previsto,
+      };
+    });
+
     setVoos(atualizados);
     setIndiceAtual(0);
     setSegundosDecorridos(0);
-
-    if (atualizados.length > 0) {
-      setHoraSimulada(new Date(atualizados[0].horario_previsto));
-      setModoSimulacao("operacao");
-    }
+    setModoSimulacao("operacao");
 
     setAlerta({
       tipo: "emergencia",
@@ -408,8 +447,21 @@ function Simulacao() {
                 </div>
 
                 <div className="voo-info-card">
-                  <span>Operação atual</span>
-                  <strong>{obterNomeOperacao(vooAtual)}</strong>
+                  <span>Horário ajustado</span>
+                  <strong>
+                    {vooAtual.horario_ajustado
+                      ? formatarHora(vooAtual.horario_ajustado)
+                      : "-"}
+                  </strong>
+                </div>
+
+                <div className="voo-info-card">
+                  <span>Horário efetivo da emergência</span>
+                  <strong>
+                    {vooAtual.horario_efetivo_emergencia
+                      ? formatarHora(vooAtual.horario_efetivo_emergencia)
+                      : "-"}
+                  </strong>
                 </div>
 
                 <div className="voo-info-card">
